@@ -22,7 +22,8 @@ envsubst < kubectl_configs/layoutlmv2_hpa.yaml | kubectl apply -f -
 # Create service with external load balancer
 envsubst < kubectl_configs/layoutlmv2_extlb_svc.yaml | kubectl apply -f -
 
-
+# Rollout restart to apply changes
+kubectl rollout restart deployment $IMAGE_NAME
 
 # # If using GPU, need to install nvidia on daemon
 # kubectl apply -f https://raw.githubusercontent.com/GoogleCloudPlatform/container-engine-accelerators/master/nvidia-driver-installer/cos/daemonset-preloaded.yaml

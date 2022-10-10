@@ -9,7 +9,7 @@ export IMAGE_PATH="$REGISTRY/$IMAGE_NAME:$IMAGE_TAG"
 
 gcloud auth configure-docker asia-southeast1-docker.pkg.dev 
 docker build -t $IMAGE_NAME ./app/
-docker tag $IMAGE_NAME $IMAGE_PATH
+docker tag $IMAGE_NAME:latest $IMAGE_PATH
 docker push $IMAGE_PATH
 
 

@@ -163,7 +163,7 @@ resource "google_container_node_pool" "node_pool" {
   }
 
   node_config {
-    machine_type = "e2-highcpu-4"
+    machine_type = "n2-highcpu-8"
 
     ## For Future testing with gpus. 
     # guest_accelerator = [{

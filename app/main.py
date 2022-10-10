@@ -3,6 +3,7 @@ from typing import Dict, List, Any
 from subprocess import run
 
 from fastapi import FastAPI, File, UploadFile, HTTPException, status, Depends
+from fastapi.responses import RedirectResponse 
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from PIL import Image
 from io import BytesIO
@@ -21,7 +22,7 @@ device = device("cuda" if cuda.is_available() else "cpu")
 # Setup token authentication
 SECRETKEY = os.environ["secretkey"]
 PLAINTEXT = "PLAINTEXT" #dummy plaintext. Do not expose plaintext in prod. This is only for demo
-ALGORITHM = "HS256" #Do not expose algorithm in prod. This is only for demo
+ALGORITHM = "HS256" # Do not expose algorithm in prod. This is only for demo
 
 token_auth_scheme = HTTPBearer()
 
@@ -40,13 +41,19 @@ def check_content_type(content_type: str, allowed_list=[]):
             f" It must be one of {allowed_list}",
         )
 
-
 @app.get("/")
 def read_root():
-    return "Hello World"
+    return RedirectResponse(url="/docs")
+
+
+###############################################################################
+### RUNNING CPU-BOUND TASK ON EVENTLOOP. THIS WILL BLOCK CONCURRENT REQUEST ###
+### BUT WILL PREVENT CPU STARVATION                                         ###
+###############################################################################
 
 @app.post("/inference_image/")
-async def run_inference(token: str = Depends(token_auth_scheme), file: UploadFile=File(...)):
+async def inference_image(token: str = Depends(token_auth_scheme), 
+                          file: UploadFile=File(...)):
     
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -63,8 +70,7 @@ async def run_inference(token: str = Depends(token_auth_scheme), file: UploadFil
 
     check_content_type(file.content_type, allowed_list=["image/jpeg", "image/png"])
 
-    contents = await file.read()  
-    
+    contents = await file.read()
     image = Image.open(BytesIO(contents))
     image = image.convert("RGB")
     result = model.predict(image=image)

@@ -32,6 +32,7 @@ spec:
         # Replace $LOCATION with your Artifact Registry location (e.g., us-west1).
         # Replace $GCLOUD_PROJECT with your project ID.
         image: $IMAGE_PATH
+        imagePullPolicy: Always
         # This app listens on port 8080 for web traffic by default.
         ports:
         - containerPort: 80
@@ -46,13 +47,13 @@ spec:
 
         resources:
           requests:
-            cpu: "800m"
+            cpu: "2000m"
           limits:
             memory: "1000Mi"
-            cpu: "1000m" 
+            cpu: "2000m" 
         readinessProbe:
             tcpSocket:
               port: 80
-            initialDelaySeconds: 30
+            initialDelaySeconds: 15
             periodSeconds: 10
 ---

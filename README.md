@@ -22,16 +22,15 @@ Priorities:
 ## Solution Deck
 Read more for the detail implementation in [solution deck](resources/SolutionDeck.pdf)
 
-## STEPS
-### INFRASTRUCTURE PROVISIONING USING TERRAFORM
+## Steps
 
-1. Authenticate to GCloud SDK
+### 1. Authenticate to GCloud SDK
 
     Assuming Gcloud SDK has been installed. Else [link here](https://cloud.google.com/sdk/docs/install)
     ```bash
     $ gcloud auth application-default 
     ```
-2. Terraform Plan and Apply
+### 2. Terraform Plan and Apply
 
     To learn about using and installing terraform: [link here](https://learn.hashicorp.com/tutorials/terraform/install-cli)
     ```bash
@@ -42,7 +41,7 @@ Read more for the detail implementation in [solution deck](resources/SolutionDec
     ```
     Might need to run a few times, because some services API needs to be enabled for the first time. 
 
-3. Download model files from hugging face
+### 3. Download model files from hugging face
 
    ```bash
    # CD to app directory and create folder for models
@@ -64,7 +63,7 @@ Read more for the detail implementation in [solution deck](resources/SolutionDec
    model.save_pretrained(save_to)
    ```
 
-4. Build docker image and push to artifact registry
+### 4. Build docker image and push to artifact registry
 
 Install docker following this instruction: [link](https://docs.docker.com/engine/install/ubuntu/)
 ```bash
@@ -85,7 +84,7 @@ docker tag $IMAGE_NAME:latest $IMAGE_PATH
 docker push $IMAGE_PATH
 ```
 
-5. Deploy Docker image to GKE as a service
+### 5. Deploy Docker image to GKE as a service
 Also setup horizonal pod autoscaler and expose the service thru external LB
 
 kubectl needs to be installed: [link](https://kubernetes.io/docs/tasks/tools/)
@@ -109,7 +108,7 @@ kubectl rollout restart deployment $IMAGE_NAME
 ```
 
 ## CONGRATS! Your app is now deployed on GKE
-run command to test
+Run command to test
 ```bash
 wget http://wimcol.org/uploads/Exam_Notice.jpg && \
 curl -m 10\

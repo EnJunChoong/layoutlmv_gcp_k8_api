@@ -7,6 +7,12 @@ kubectl_configs/secrets.yaml
 #model files
 app/models/**/*
 
+### VSCODE ###
+.python-version
+.vscode/
+SolutionDeck_IncludesToken.pdf
+SolutionDeck_IncludesToken.pptx
+
 ### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/

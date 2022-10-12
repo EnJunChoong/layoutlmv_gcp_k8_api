@@ -6,12 +6,12 @@ print("enter token")
 secret_key=input()
 
 class test_inference_image(HttpUser):
-    wait_time = between(5,8)
+    wait_time = between(3,5)
     
     def on_start(self):
         self.headers={"Authorization": f"Bearer {secret_key}"}       
 
-        path_to_image="test.png"
+        path_to_image="test_72.png"
         with open(path_to_image, "rb") as f:
             self.bytes_obj = f.read()
             self.fname = os.path.basename(path_to_image)

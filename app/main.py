@@ -9,8 +9,13 @@ from PIL import Image
 from io import BytesIO
 from jose import jwt, JWTError
 
+import torch
 from torch import device, cuda
 from model import Model
+os.environ['OMP_NUM_THREADS'] = str(2)
+os.environ['OPENBLAS_NUM_THREADS'] = str(2)
+os.environ['MKL_NUM_THREADS'] = str(2)
+torch.set_num_threads(2)
 
 
 WORK_DIR = os.path.dirname(os.path.abspath(__file__))
